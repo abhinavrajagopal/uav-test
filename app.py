@@ -27,9 +27,15 @@ def get_img_radius(curr_coords, imgToGPS, radius):
         return img_list
 
 def get_coords_srt(srt):
-        return (curr_lat, curr_lng)
+    curr_lat, curr_lng, elevation = srt.text.split(',')
+    return (curr_lat, curr_lng)
+
 def get_img_list(srt_list, imgToGPS, radius):
-        return img_list
+    img_list = []
+    for srt in srt_list:
+        img_list += get_img_radius(get_coords_srt(srt), imgToGPS, radius)
+    return img_list
+
 def get_srt_time(srt, curr_time, end_time):
         return srt.slice(
                 starts_after={'minutes':curr_time.minute, 'seconds':curr_time.second},
@@ -64,7 +70,7 @@ def generate_kml(video, vid_path):
         data = []
         for srt in subs:
             latitude, longitude = get_coords_srt(srt)
-            data.append([sub.start, latitude, longitude])
+            data.append([srt.start, latitude, longitude])
         csv_name = create_filename("kml_", video, "csv")
         write_to_csv(data, csv_name)
         inputfile = csv.reader(open(csv_name, "r"))
@@ -74,11 +80,11 @@ def generate_kml(video, vid_path):
             kml.save(create_filename("", video, "kml"))
 
 def vid_process(imgToGPS, vid_dir, vid_pattern):
-        vid_list = os.list_dir(vid_dir)
+        vid_list = os.listdir(vid_dir)
         for video in vid_list:
             if fnmatch.fnmatch(video, vid_pattern):
                 vid_path = '/'.join([vid_dir, video])
-                vid_proc(video, vid_path, imgToGPS)
+                video_process(video, vid_path, imgToGPS)
                 generate_kml(video, vid_path)
 
 def csv_read(csv_name):
@@ -90,12 +96,12 @@ def csv_read(csv_name):
         return data
 
 def POI_process(imgToGPS, csv_name):
-        assests_data = csv_read(csv_name)
+        assets_data = csv_read(csv_name)
         image_data = []
         image_data.append(["asset_name", "image_names"])
         for asset in assets_data:
             curr_coords = (asset["latitude"], asset["longitude"])
-            img_list = img_radius(curr_coords, imgToGPS, poi_radus)
+            img_list = get_img_radius(curr_coords, imgToGPS, poi_radius)
             image_data.append([asset["asset_name"], ", ".join(img_list)])
             write_to_csv(image_data, create_filename("images_", csv_name, "csv"))
 

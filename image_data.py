@@ -30,7 +30,7 @@ class image_data(object):
         lat = None
         lng = None
         exif_data = self.get_exif_data()
-        if "GPS" in exif_data:
+        if exif_data and "GPS" in exif_data:
             gps_data = exif_data["GPS"]
             gps_latitude = self.get_if_exist(gps_data, piexif.GPSIFD.GPSLatitude)
             gps_latitude = self.get_if_exist(gps_data, piexif.GPSIFD.GPSLatitudeRef)
