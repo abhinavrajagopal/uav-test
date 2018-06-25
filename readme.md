@@ -15,7 +15,7 @@ These can be installed with the package manager pip.
 This application reads a SRT file wihch contains the GPS coordinates at the timestamps where the UAV was present over the area.
 It creates a map of images in a directory which are linked to their specific coordinates from the footage.
 Then, a CSV is created which contains the list of image file names that are calculated within the radius of the drone path from the video.
-A kml is also created of the drone path throughout the video. This can beb extended to any other drone video as it's generic.
+A kml is also created of the drone path throughout the video. This can also be extended to any other drone video as it's generic.
 
 Additionally it reads a CSV file with points of interest and coordinates and creates another CSV that generates image file names within a specific point of interest of radius.
 
