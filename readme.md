@@ -2,10 +2,10 @@
 
 ##### Simple script to obtain metadata of UAV path from a video footage and store the data in a file. Additional feature includes generating a kml of the drone path.
 
-Dependencies to be installed: pysrt : Python library to edit and create SubRip files.
-                              simplekml :  Python package to generate KML with as little effort as possible.
-                              piexif : Python package to simplify exif manipulations.
-                              geopy : Geocoding library for Python.
+Dependencies to be installed: - pysrt : Python library to edit and create SubRip files.
+                              - simplekml :  Python package to generate KML with as little effort as possible.
+                              - piexif : Python package to simplify exif manipulations.
+                              - geopy : Geocoding library for Python.
                               
 These can be installed with the package manager pip.
 
